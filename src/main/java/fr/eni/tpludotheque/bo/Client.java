@@ -12,8 +12,7 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "no_client")
-    private Integer noClient;
+    private Integer id;
 
     @NonNull
     @Column(nullable = false, length = 50)
@@ -29,4 +28,8 @@ public class Client {
     @NonNull
     @Column(nullable = false, length = 100, unique = true)
     private String email;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_adresse", referencedColumnName = "id")
+    private Adresse adresse;
 }
