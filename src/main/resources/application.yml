@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: TP-Ludotheque
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=LUDO_DB;encrypt=true;trustServerCertificate=true
+    username: LUDO_USER
+    password: LUDO_PWD
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.SQLServerDialect
+    hibernate:
+      ddl-auto: create
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
