@@ -27,6 +27,6 @@ public class Client {
     private String noTelephone;
 
     @NonNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 }
