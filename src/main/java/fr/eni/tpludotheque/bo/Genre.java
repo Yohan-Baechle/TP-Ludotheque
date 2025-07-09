@@ -3,6 +3,8 @@ package fr.eni.tpludotheque.bo;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -17,4 +19,7 @@ public class Genre {
     @NonNull
     @Column(nullable = false, length = 50)
     private String libelle;
+
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Jeu> jeux;
 }

@@ -33,4 +33,8 @@ public class Jeu {
 
     @Column(name = "tarif_jour", precision = 10, scale = 2)
     private BigDecimal tarifJour;
+
+    @ManyToOne
+    @JoinColumn(name = "id_genre", nullable = false)
+    private Genre genre;
 }
