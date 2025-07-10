@@ -1,55 +1,44 @@
 package fr.eni.tpludotheque.bll;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import fr.eni.tpludotheque.bo.Adresse;
 import fr.eni.tpludotheque.bo.Client;
 import fr.eni.tpludotheque.dal.ClientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(MockitoExtension.class)
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@SpringBootTest
 public class ClientServiceImplTest {
 
-    @Mock
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
     private ClientRepository clientRepository;
 
-    @InjectMocks
-    private ClientServiceImpl clientService;
-
     @Test
-    @DisplayName("S2008 - Ajouter un client et son adresse (DAL mockée) - Cas positif")
-    public void testAjouterClientAvecAdresse() {
+    @DisplayName("S2009 - Trouver les clients dont le nom commence par une chaîne donnée")
+    public void findClientsByNomStartingWithCasDroit() {
         // Arrange
-        Adresse adresse = new Adresse("123 rue des Lilas", "75000", "Paris");
-        Client client = new Client("Doe", "John", "john.doe@example.com");
-        client.setNoTelephone("0601020304");
-        client.setAdresse(adresse);
-
-        // Simuler que la DAL renvoie le client avec un id généré
-        Client clientAvecId = new Client("Doe", "John", "john.doe@example.com");
-        clientAvecId.setId(1);
-        clientAvecId.setNoTelephone("0601020304");
-        clientAvecId.setAdresse(adresse);
-        adresse.setId(2);
-
-        when(clientRepository.save(client)).thenReturn(clientAvecId);
+        Client c1 = new Client("Dupont", "Alice", "alice.dupont@example.com");
+        Client c2 = new Client("Durand", "Bob", "bob.durand@example.com");
+        Client c3 = new Client("Martin", "Charlie", "charlie.martin@example.com");
+        clientRepository.save(c1);
+        clientRepository.save(c2);
+        clientRepository.save(c3);
 
         // Act
-        Client resultat = clientService.ajouterClient(client);
+        List<Client> clients = clientService.findClientsByNom("Du");
 
         // Assert
-        assertNotNull(resultat, "Le client retourné ne doit pas être null");
-        assertNotNull(resultat.getId(), "L'id du client doit être généré (mocké)");
-        assertEquals(1, resultat.getId());
-        assertNotNull(resultat.getAdresse(), "L'adresse ne doit pas être null");
-        assertEquals("Paris", resultat.getAdresse().getVille(), "La ville doit être Paris");
-
-        verify(clientRepository, times(1)).save(client);
+        assertNotNull(clients, "La liste des clients ne doit pas être null");
+        assertThat(clients)
+                .extracting(Client::getNom)
+                .containsExactlyInAnyOrder("Dupont", "Durand");
     }
 }
