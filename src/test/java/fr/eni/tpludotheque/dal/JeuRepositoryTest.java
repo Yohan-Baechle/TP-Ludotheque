@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import fr.eni.tpludotheque.bo.Genre;
 import fr.eni.tpludotheque.bo.Jeu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,16 +20,23 @@ public class JeuRepositoryTest {
     @Autowired
     private JeuRepository jeuRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
     @Test
     @DisplayName("Création d'un jeu avec JPA")
     public void testCreationJeu() {
         // Arrange
+        Genre genre = new Genre("Stratégie");
+        genreRepository.save(genre);
+
         long nbJeux = jeuRepository.count();
         Jeu jeu = new Jeu("Catan", "REFCATAN");
         jeu.setAgeMin(10);
         jeu.setDescription("Jeu de stratégie de gestion de ressources.");
         jeu.setDuree(90);
         jeu.setTarifJour(new BigDecimal("4.50"));
+        jeu.setGenre(genre);
 
         // Act
         jeuRepository.save(jeu);
@@ -42,11 +50,16 @@ public class JeuRepositoryTest {
     @DisplayName("Recherche d'un jeu avec JPA")
     public void testFindByIdJeu() {
         // Arrange
+        Genre genre = new Genre("Familial");
+        genreRepository.save(genre);
+
         Jeu jeu = new Jeu("Carcassonne", "REFCARCA");
         jeu.setAgeMin(8);
         jeu.setDescription("Jeu de placement de tuiles et de meeples.");
         jeu.setDuree(45);
         jeu.setTarifJour(new BigDecimal("3.00"));
+        jeu.setGenre(genre);
+
         jeuRepository.save(jeu);
         Integer idJeu = jeu.getId();
 
@@ -63,11 +76,16 @@ public class JeuRepositoryTest {
     @DisplayName("Modification d'un jeu avec JPA")
     public void testModificationJeu() {
         // Arrange
+        Genre genre = new Genre("Deck Building");
+        genreRepository.save(genre);
+
         Jeu jeu = new Jeu("7 Wonders", "REF7WON");
         jeu.setAgeMin(10);
         jeu.setDescription("Jeu de civilisation rapide.");
         jeu.setDuree(30);
         jeu.setTarifJour(new BigDecimal("3.50"));
+        jeu.setGenre(genre);
+
         jeuRepository.save(jeu);
         Integer idJeu = jeu.getId();
 
