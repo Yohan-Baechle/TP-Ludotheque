@@ -4,6 +4,8 @@ import fr.eni.tpludotheque.bo.Client;
 import fr.eni.tpludotheque.dal.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -17,5 +19,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client ajouterClient(Client client) {
         return clientRepository.save(client);
+    }
+
+    @Override
+    public List<Client> findClientsByNom(String prefix) {
+        return clientRepository.findByNomStartingWith(prefix);
     }
 }
