@@ -36,4 +36,9 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Client> modifierClient(@PathVariable("id") Integer id, @RequestBody ClientDTO clientDTO) {
+        Client updatedClient = clientService.modifierClient(id, clientDTO);
+        return ResponseEntity.ok(updatedClient);
+    }
 }
