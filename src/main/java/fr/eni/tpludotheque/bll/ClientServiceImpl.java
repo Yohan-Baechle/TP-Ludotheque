@@ -17,11 +17,12 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
-    private AdresseRepository adresseRepository;
+    private final AdresseRepository adresseRepository;
 
     // Injection par constructeur
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, AdresseRepository adresseRepository) {
         this.clientRepository = clientRepository;
+        this.adresseRepository = adresseRepository;
     }
 
     @Override
@@ -35,30 +36,24 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client modifierClient(Integer noClient, ClientDTO clientDto) {
-        Client client = clientRepository.findById(noClient)
-                .orElseThrow(() -> new EntityNotFoundException("Client avec l'id " + noClient + " non trouvé."));
+    public Client modifierClient(Integer id, ClientDTO clientDto) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new DataNotFound("Client", id));
 
-        // Mise à jour des informations du client
         client.setNom(clientDto.getNom());
         client.setPrenom(clientDto.getPrenom());
         client.setEmail(clientDto.getEmail());
         client.setNoTelephone(clientDto.getNoTelephone());
 
-        // Mise à jour de l'adresse associée
-        Adresse adresse = client.getAdresse();
-        if (adresse == null) {
-            adresse = new Adresse();
+        if (client.getAdresse() == null) {
+            client.setAdresse(new Adresse());
         }
-        adresse.setRue(clientDto.getRue());
-        adresse.setCodePostal(clientDto.getCodePostal());
-        adresse.setVille(clientDto.getVille());
-
-        client.setAdresse(adresse);
+        client.getAdresse().setRue(clientDto.getRue());
+        client.getAdresse().setCodePostal(clientDto.getCodePostal());
+        client.getAdresse().setVille(clientDto.getVille());
 
         return clientRepository.save(client);
     }
-
 
     @Override
     public Client modifierAdresseClient(Integer id, AdresseDTO adresseDto) {

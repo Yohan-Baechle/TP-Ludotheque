@@ -1,6 +1,7 @@
 package fr.eni.tpludotheque.rest;
 
 import fr.eni.tpludotheque.bo.Client;
+import fr.eni.tpludotheque.dto.AdresseDTO;
 import fr.eni.tpludotheque.dto.ClientDTO;
 import fr.eni.tpludotheque.bll.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,12 @@ public class ClientController {
     @PutMapping("/{id}")
     public ResponseEntity<Client> modifierClient(@PathVariable("id") Integer id, @RequestBody ClientDTO clientDTO) {
         Client updatedClient = clientService.modifierClient(id, clientDTO);
+        return ResponseEntity.ok(updatedClient);
+    }
+
+    @PatchMapping("/{id}/adresse")
+    public ResponseEntity<Client> modifierAdresseClient(@PathVariable Integer id, @RequestBody AdresseDTO adresseDTO) {
+        Client updatedClient = clientService.modifierAdresseClient(id, adresseDTO);
         return ResponseEntity.ok(updatedClient);
     }
 }
