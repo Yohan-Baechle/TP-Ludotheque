@@ -69,4 +69,24 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
+
+    @Override
+    public Client ajouterClient(ClientDTO clientDTO) {
+        Adresse adresse = new Adresse(
+                clientDTO.getRue(),
+                clientDTO.getCodePostal(),
+                clientDTO.getVille()
+        );
+
+        Client client = new Client(
+                clientDTO.getNom(),
+                clientDTO.getPrenom(),
+                clientDTO.getEmail()
+        );
+        client.setNoTelephone(clientDTO.getNoTelephone());
+        client.setAdresse(adresse);
+
+        return clientRepository.save(client);
+    }
+
 }

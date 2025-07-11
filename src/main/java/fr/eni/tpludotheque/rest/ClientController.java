@@ -23,4 +23,10 @@ public class ClientController {
         List<Client> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }
+
+    @PostMapping
+    public ResponseEntity<Client> ajouterClient(@RequestBody ClientDTO clientDTO) {
+        Client createdClient = clientService.ajouterClient(clientDTO);
+        return ResponseEntity.ok(createdClient);
+    }
 }
