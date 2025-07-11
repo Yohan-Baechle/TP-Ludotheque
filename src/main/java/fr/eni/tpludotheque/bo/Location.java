@@ -2,6 +2,8 @@ package fr.eni.tpludotheque.bo;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,7 +27,7 @@ public class Location {
     private LocalDateTime dateRetour;
 
     @Column(nullable = false)
-    private float tarifJour;
+    private BigDecimal tarifJour;
 
     @EqualsAndHashCode.Include
     @NonNull

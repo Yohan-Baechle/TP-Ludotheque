@@ -11,4 +11,5 @@ public interface ClientService {
     List<Client> findClientsByNom(String prefix);
     public Client modifierClient(Integer noClient, ClientDTO clientDto);
     public Client modifierAdresseClient(Integer noClient, AdresseDTO adresseDto) ;
+    List<Client> getAllClients();
 }
