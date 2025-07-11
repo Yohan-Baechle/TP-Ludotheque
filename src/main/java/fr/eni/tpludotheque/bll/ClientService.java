@@ -7,6 +7,7 @@ import fr.eni.tpludotheque.dto.ClientDTO;
 import java.util.List;
 
 public interface ClientService {
+    Client getClientById(Integer id);
     Client ajouterClient(Client client);
     List<Client> findClientsByNom(String prefix);
     public Client modifierClient(Integer noClient, ClientDTO clientDto);

@@ -25,6 +25,13 @@ public class ClientController {
         return ResponseEntity.ok(clients);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Client> getClientById(@PathVariable Integer id) {
+        Client client = clientService.getClientById(id);
+        return ResponseEntity.ok(client);
+    }
+
+
     @PostMapping
     public ResponseEntity<Client> ajouterClient(@RequestBody ClientDTO clientDTO) {
         Client createdClient = clientService.ajouterClient(clientDTO);

@@ -26,6 +26,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client getClientById(Integer id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new DataNotFound("Client", id));
+    }
+
+    @Override
     public Client ajouterClient(Client client) {
         return clientRepository.save(client);
     }
