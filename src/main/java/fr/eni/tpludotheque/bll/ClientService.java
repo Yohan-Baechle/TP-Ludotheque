@@ -12,4 +12,6 @@ public interface ClientService {
     public Client modifierClient(Integer noClient, ClientDTO clientDto);
     public Client modifierAdresseClient(Integer noClient, AdresseDTO adresseDto) ;
     List<Client> getAllClients();
+    Client ajouterClient(ClientDTO clientDTO);
+
 }
