@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
@@ -33,7 +34,7 @@ public class LocationServiceImpl implements LocationService{
         client.setId(locationDto.getNoClient());
 
         Location location = new Location(LocalDateTime.now(),client, exemplaire );
-        Float tarifJour = jeuRepository.findTarifJour(exemplaire.getJeu().getId());
+        BigDecimal tarifJour = jeuRepository.findTarifJour(exemplaire.getJeu().getId());
         location.setTarifJour(tarifJour);
 
         return locationRepository.save(location);
