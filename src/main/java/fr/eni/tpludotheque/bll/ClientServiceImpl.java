@@ -35,24 +35,30 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client modifierClient(Integer id, ClientDTO clientDto) {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new DataNotFound("Client", id));
+    public Client modifierClient(Integer noClient, ClientDTO clientDto) {
+        Client client = clientRepository.findById(noClient)
+                .orElseThrow(() -> new EntityNotFoundException("Client avec l'id " + noClient + " non trouvé."));
 
+        // Mise à jour des informations du client
         client.setNom(clientDto.getNom());
         client.setPrenom(clientDto.getPrenom());
         client.setEmail(clientDto.getEmail());
         client.setNoTelephone(clientDto.getNoTelephone());
 
-        if (client.getAdresse() == null) {
-            client.setAdresse(new Adresse());
+        // Mise à jour de l'adresse associée
+        Adresse adresse = client.getAdresse();
+        if (adresse == null) {
+            adresse = new Adresse();
         }
-        client.getAdresse().setRue(clientDto.getRue());
-        client.getAdresse().setCodePostal(clientDto.getCodePostal());
-        client.getAdresse().setVille(clientDto.getVille());
+        adresse.setRue(clientDto.getRue());
+        adresse.setCodePostal(clientDto.getCodePostal());
+        adresse.setVille(clientDto.getVille());
+
+        client.setAdresse(adresse);
 
         return clientRepository.save(client);
     }
+
 
     @Override
     public Client modifierAdresseClient(Integer id, AdresseDTO adresseDto) {
