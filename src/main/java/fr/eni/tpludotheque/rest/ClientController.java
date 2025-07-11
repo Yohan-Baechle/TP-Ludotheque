@@ -48,4 +48,10 @@ public class ClientController {
         Client updatedClient = clientService.modifierAdresseClient(id, adresseDTO);
         return ResponseEntity.ok(updatedClient);
     }
+
+    @GetMapping("/recherche")
+    public ResponseEntity<List<Client>> findClientsByNom(@RequestParam String prefix) {
+        List<Client> clients = clientService.findClientsByNom(prefix);
+        return ResponseEntity.ok(clients);
+    }
 }
