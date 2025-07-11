@@ -7,6 +7,7 @@ import fr.eni.tpludotheque.dal.ClientRepository;
 import fr.eni.tpludotheque.dto.AdresseDTO;
 import fr.eni.tpludotheque.dto.ClientDTO;
 import fr.eni.tpludotheque.exceptions.DataNotFound;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -89,4 +90,11 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.save(client);
     }
 
+    @Override
+    public void supprimerClient(Integer id) {
+        if (!clientRepository.existsById(id)) {
+            throw new EntityNotFoundException("Client avec l'id " + id + " non trouvé.");
+        }
+        clientRepository.deleteById(id);
+    }
 }
