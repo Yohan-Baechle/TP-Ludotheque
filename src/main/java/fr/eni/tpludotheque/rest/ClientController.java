@@ -29,4 +29,11 @@ public class ClientController {
         Client createdClient = clientService.ajouterClient(clientDTO);
         return ResponseEntity.ok(createdClient);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> supprimerClient(@PathVariable Integer id) {
+        clientService.supprimerClient(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

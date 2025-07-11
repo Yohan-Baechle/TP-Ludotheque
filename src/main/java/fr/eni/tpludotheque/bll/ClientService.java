@@ -13,5 +13,5 @@ public interface ClientService {
     public Client modifierAdresseClient(Integer noClient, AdresseDTO adresseDto) ;
     List<Client> getAllClients();
     Client ajouterClient(ClientDTO clientDTO);
-
+    void supprimerClient(Integer id);
 }
